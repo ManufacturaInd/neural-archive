@@ -1,0 +1,50 @@
+{{response.title = "Browse - The Neural Archive" }}
+{{extend 'layout.html'}}
+<h1>Publication index{{if pubtype:}} ({{=pubtype}}s){{pass}}</h1>
+<ul class="filters">
+  <li{{if not pubtype:}} class="selected"{{pass}}><a href="{{=URL('browse')}}">Show all</a></li>
+  <li{{if pubtype=='book':}} class="selected"{{pass}}><a href="{{=URL('browse')}}?pubtype=book">Books</a></li>
+  <li{{if pubtype=='magazine':}} class="selected"{{pass}}><a href="{{=URL('browse')}}?pubtype=magazine">Magazines</a></li>
+  <li{{if pubtype=='catalogue':}} class="selected"{{pass}}><a href="{{=URL('browse')}}?pubtype=catalogue">Catalogues</a></li>
+  <li{{if pubtype=='flyer':}} class="selected"{{pass}}><a href="{{=URL('browse')}}?pubtype=flyer">Flyers</a></li>
+  <li{{if pubtype=='journal':}} class="selected"{{pass}}><a href="{{=URL('browse')}}?pubtype=journal">Journals</a></li>
+</ul>
+
+<table>
+  <thead>
+    <th>&nbsp;</th>
+    <th>Title</th>
+    <th>Year</th>
+    <th>Country</th>
+    <th>Author</th>
+    <th>Publisher</th>
+  </thead>
+  <tbody>
+  {{for i,entry in enumerate(entries):}}
+  {{if i == items_per_page: break}}
+  <tr>
+    <td>
+    {{if entry.image_thumbnail:}}
+    <a class="imagelink" href="{{=URL('show',args=entry.id)}}" title="{{=entry.title}}"><img src="{{=URL('download',args=entry.image_thumbnail)}}" height="30"/></a>
+    {{elif entry.image_name:}}
+    <a class="imagelink" href="{{=URL('show',args=entry.id)}}" title="{{=entry.title}}"><img src="http://manufacturaindependente.com/neural-archive-imgs/thumbs/{{=entry.image_name.replace('.tif','.jpg')}}" height="30"/></a>
+    {{pass}}
+    </td>
+    <!-- <td><img src="{{=URL('download',args=entry.image_name)}}"> </td> -->
+    {{=TD(A(entry.title, _href=URL("show", args=entry.id)), _class="title")}}
+    {{=TD(entry.year, _class="year")}}
+    {{=TD(entry.country, _class="country")}}
+    {{=TD(entry.author, _class="author")}}
+    {{=TD(entry.publisher, _class="publisher")}}
+  </tr>
+  {{pass}}
+  </tbody>
+</table>
+
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">Previous {{=items_per_page}} entries</a>
+{{pass}}
+
+{{if len(rows)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">Next {{=items_per_page}} entries</a>
+{{pass}}

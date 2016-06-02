@@ -1,0 +1,46 @@
+{{response.title = "Search - The Neural Archive" }}
+{{extend 'layout.html'}}
+{{if not results:}}
+<h1>Search the Archive</h1>
+{{else:}}
+<h1>Search Results</h1>
+{{pass}}
+<div class="searchform">
+  {{=form}}
+</div>
+
+<div class="searchresults">
+{{if results:}}
+
+<table>
+  <thead>
+    <th>&nbsp;</th>
+    <th>Title</th>
+    <th>Year</th>
+    <th>Country</th>
+    <th>Author</th>
+    <th>Publisher</th>
+  </thead>
+  <tbody>
+  {{for r in results:}}
+  <tr>
+    <td>
+    {{entry = db(db.entry.id==int(r.id)).select().first()}}
+    {{if entry.image_thumbnail:}}
+    <a class="imagelink" href="{{=URL('show',args=r.id)}}" title="{{=r.title}}"><img src="{{=URL('download',args=entry.image_thumbnail)}}" height="30"/></a>
+    {{elif entry.image_name:}}
+    <a class="imagelink" href="{{=URL('show',args=entry.id)}}" title="{{=entry.title}}"><img src="http://manufacturaindependente.com/neural-archive-imgs/thumbs/{{=entry.image_name.replace('.tif','.jpg')}}" height="30"/></a>
+    {{pass}}
+    </td>
+    <!-- <td><img src="{{=URL('download',args=entry.image_name)}}"> </td> -->
+    {{=TD(A(r.title, _href=URL("show", args=r.id)), _class="title")}}
+    {{=TD(r.year, _class="year")}}
+    {{=TD(r.country, _class="country")}}
+    {{=TD(r.author, _class="author")}}
+    {{=TD(r.publisher, _class="publisher")}}
+  </tr>
+  {{pass}}
+  </tbody>
+</table>
+{{pass}}
+</div>

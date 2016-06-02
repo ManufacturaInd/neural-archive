@@ -1,0 +1,4 @@
+{{response.title = "Add publication - The Neural Archive" }}
+{{extend 'layout.html'}}
+<h1>Create new entry</h1>
+{{=form}}

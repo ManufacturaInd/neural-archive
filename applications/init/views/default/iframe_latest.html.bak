@@ -1,0 +1,59 @@
+<base target="_parent" />
+<link rel="stylesheet" media="all" href="http://neural.it/wp-content/themes/Neural/css/color.css" />
+<link rel="stylesheet" media="all" href="http://neural.it/wp-content/themes/Neural/style.css" />
+
+{{ for entry in entries: }}
+<div class="thearchive-entry">
+{{=H4(A(entry['title'], _href=URL("show", args=entry['id'])))}}
+    {{if entry.image_medium:}}<a class="imagelink" href="{{=URL('show',args=entry.id)}}"><img src="{{=URL('download',args=entry.image_medium)}}" /></a>
+    {{elif entry.image_name:}}<a class="imagelink" href="{{=URL('show',args=entry.id)}}"><img src="http://manufacturaindependente.com/neural-archive-imgs/medium/{{=entry.image_name.replace('.tif','.jpg')}}" /></a>
+    {{pass}}
+    <dl>
+      {{ if entry.author: }}  <dt>Author</dt><dd>{{ =entry.author }}</dd>{{ pass }}
+      {{ if entry.year: }}<dt>Year</dt><dd>{{ =entry.year }}</dd>{{ pass }}
+      {{ if entry.publisher: }}<dt>Publisher/Label</dt><dd>{{ =entry.publisher }}</dd>{{ pass }}
+      {{ if entry.country: }}<dt>Country</dt><dd>{{ =entry.country }}</dd>{{ pass }}
+    </dl>
+
+
+
+    <!-- {{=IMG(_src=entry.image_medium)}} -->
+    </div>
+{{pass}}
+
+<script type="text/javascript" src="http://neural.it/wp-content/themes/Neural/js/jquery-1.9.1.min.js"> </script>
+<script type="text/javascript" src="http://neural.it/wp-content/themes/Neural/js/pixastic.custom.js"> </script>
+
+<script type="text/javascript">      
+            // B&W support
+            var iframebw_is_active = false;
+            var toggleiframeBW = function() {
+                if (!iframebw_is_active) {
+                    // set b&w stylesheet
+                    jQuery("link[rel=stylesheet]").first().attr({href : "http://neural.it/wp-content/themes/Neural/css/bw.css"});
+                    iframebw_is_active = true;
+                    // desaturate images
+                    jQuery("img").pixastic("desaturate");
+                    jQuery("canvas").pixastic("desaturate");
+
+                }
+                else {
+                    // set default stylesheet
+                    jQuery("link[rel=stylesheet]").first().attr({href : "http://neural.it/wp-content/themes/Neural/css/color.css"});
+                    iframebw_is_active = false;
+                    // revert images
+                    var imgs, i;
+                    imgs = $("canvas")
+                    for (i = 0; i < imgs.length; ++i) { Pixastic.revert(imgs[i]); }
+
+                }
+            }
+            
+    window.addEventListener( "message",
+      function (e) {
+            if(e.origin !== "http://neural.it"){ console.log(e.origin); return; } 
+            if(e.data == "toggle"){ toggleiframeBW(); }
+            console.log(e.data);
+      },
+      false);
+</script>

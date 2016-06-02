@@ -1,0 +1,16 @@
+<style type="text/css">
+h4 {
+font-family: 'Oswald';
+text-transform: uppercase;
+border-bottom: 2px solid #2F2F39;
+border-top: 2px solid #2F2F39;
+font-size: 1.0625em;
+line-height: 1;
+padding: 3px 0 4px;
+}
+</style>
+
+<link rel="stylesheet" media="all" href="http://manufacturaindependente.com/neuralblog/wp-content/themes/00_neural/css/color.css" />
+<link rel="stylesheet" media="all" href="http://manufacturaindependente.com/neuralblog/wp-content/themes/00_neural/style.css" />
+
+<h4><a href="http://arqv.koizo.org/arqv/show/{{=entry.id}}">{{=entry.title}}</a></h4>

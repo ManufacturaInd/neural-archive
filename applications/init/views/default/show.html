@@ -1,0 +1,54 @@
+{{response.title = entry.title + " - The Neural Archive" }}
+{{extend 'layout.html'}}
+
+<div class="entry-header">
+  <h1>{{=entry.title}}</h1>
+  <!-- AddToAny BEGIN -->
+  <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="http://www.addtoany.com/share_save">Share</a>
+    {{if auth.is_logged_in():}}
+    {{=A('Edit this entry', _href=URL('edit', args=request.args))}}
+    {{pass}}
+  </div>
+  <script type="text/javascript" src="http://static.addtoany.com/menu/page.js"></script>
+  <!-- AddToAny END -->
+</div>
+
+<dl class="inline-list">
+{{if entry.author:}}     <dt>Author</dt> <dd>{{=entry.author}}</dd> {{pass}}
+{{if entry.publisher:}}  <dt>Publisher / Label</dt> <dd>{{=entry.publisher}}</dd> {{pass}}
+{{if entry.country:}}    <dt>Country</dt> <dd>{{=entry.country}}</dd> {{pass}}
+{{if entry.language:}}   <dt>Language</dt> <dd>{{=entry.language}}</dd> {{pass}}
+{{if entry.year:}}       <dt>Publication year</dt> <dd>{{=entry.year}}</dd> {{pass}}
+
+{{if entry.type:}}       <dt>Type of publication</dt> <dd>{{=entry.type}}</dd> {{pass}}
+{{if entry.issue:}}      <dt>Issue number</dt> <dd>{{=entry.issue}}</dd> {{pass}}
+{{if entry.pages:}}      <dt>Number of pages</dt> <dd>{{=entry.pages}}</dd> {{pass}}
+{{if entry.isbn:}}       <dt>ISBN</dt> <dd>{{=entry.isbn}}</dd> {{pass}}
+{{if entry.ean:}}        <dt>EAN</dt> <dd>{{=entry.ean}}</dd> {{pass}}
+</dl>
+
+<div class="archive-entry">
+  <div class="one-third column">
+    {{if entry.image_medium:}}<a class="imagelink" href="{{=URL('download',args=entry.image)}}"><img src="{{=URL('download',args=entry.image_medium)}}" /></a>
+    {{elif entry.image_name:}}
+    <a class="imagelink" href="http://manufacturaindependente.com/neural-archive-imgs/fullsize/{{=entry.image_name.replace('.tif','.jpg')}}"><img src="http://manufacturaindependente.com/neural-archive-imgs/medium/{{=entry.image_name.replace('.tif','.jpg')}}" /></a>
+    {{pass}}
+  </div>
+
+  <div class="two-thirds column">
+    {{if entry.pub_index:}}
+    <h3>Index</h3>
+    {{=PRE(entry.pub_index)}}
+    {{pass}}
+  </div>
+</div>
+
+{{if auth.is_logged_in():}}
+<h3>Entry metadata</h3>
+<dl class="inline-list">
+  {{if entry.missed_data:}}   <dt>Missed data</dt> <dd>{{=entry.missed_data}}</dd> {{pass}}  
+  <dt>Created on</dt> <dd>{{=entry.created_on}}</dd>
+  {{if entry.image_name:}}   <dt>Image filename</dt> <dd>{{=entry.image_name}}</dd> {{pass}}
+</dl>
+{{pass}}

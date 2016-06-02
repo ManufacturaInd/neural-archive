@@ -1,0 +1,34 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+
+<div id="cover-index">
+{{for entries in entryset:}}  
+<ul>
+  {{for entry in entries:}}
+  <li>
+  <!-- {{=URL('show',args=entry.id)}} -->
+  {{if entry.image_thumbnail:}}<a class="imagelink" rel="tipsy" href="{{=URL('show',args=entry.id)}}" title="{{=entry.title}}"><img alt="{{=entry.title}}" src="{{=URL('download',args=entry.image_thumbnail)}}" /></a>
+    {{elif entry.image_name:}}
+    <a class="imagelink" rel="tipsy" href="{{=URL('show',args=entry.id)}}" title="{{=entry.title}}"><img alt="{{=entry.title}}" src="http://manufacturaindependente.com/neural-archive-imgs/thumbs/{{=entry.image_name.replace('.tif','.jpg')}}" /></a>
+    {{else:}}
+    <a class="imagelink" rel="tipsy" href="{{=URL('show',args=entry.id)}}" title="{{=entry.title}}">{{=entry.title}}</a>
+    {{pass}}
+  </li> 
+  {{pass}}
+</ul>
+{{pass}}
+</div>
+
+<p class="index-browse">{{=A(T("Browse the Neural Archive"), _href=URL('arqv','default','browse'))}}</p>
+
+{{block right_sidebar}}
+<!--{{=A(T("Administrative Interface"), _href=URL('admin','default','index'), _class='button',
+     _style='margin-top: 1em;')}}
+<h6>{{=T("Quick links")}}</h6>
+<ul>
+  <li>{{=A(T("Browse"), _href=URL('arqv','default','browse'))}}</li>
+  <li>{{=A(T("Add"), _href=URL('arqv','default','add'))}}</li>
+  <li class="strike">{{=A(T("Random"), _href=URL('arqv','default','random'))}}</li>
+</ul>
+-->
+{{end}}
